@@ -1,0 +1,137 @@
+{% extends 'base.html' %}
+
+{% block title %} Home Page 
+{% endblock %}
+
+
+{% load static %}
+
+{% block base %}
+
+
+<style>
+.zoom-div {
+    display: inline-block;
+    transition: transform 0.6s ease; 
+    overflow: hidden; 
+}
+.zoom-div:hover {
+    transform: scale(1.1); 
+}
+.zoom-div img {
+    display: block; 
+    width: 100%; 
+}
+
+
+</style>
+
+<div class="row">
+    <div class="col-md-6">
+        
+        <img src="{% static 'css/images/pexels-chanwalrus-941869.jpg' %}" alt="Image" style="width: 1530px; height: 500px;">
+    </div>
+    <div class="msg text-center " style=" margin-top: -450px; margin-left: 650px; z-index: 9;">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="warning {% if message.tags %}
+                        alert-{{ message.tags }}
+                        {% endif %}">
+            {{message}}
+        </div>
+            {% endfor %}
+        {% endif %}
+</div>
+    
+    <div class="text-light bd-highlight" style="position: relative; margin-top: -480px; margin-left: 970px; "> 
+   
+
+        <a href=" {% url 'Add_stall' %}" style="text-decoration: none; font-size: 24px;font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;" class="text-light ">Add Stalls</a></div>
+        <div class="text-light bd-highlight" style="position: relative; margin-top: -480px; margin-left: 1120px; "> 
+            <a href=" {% url 'Show_stalls' %}" style="text-decoration: none; font-size: 24px;font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;;" class="text-light ">View Stalls</a></div>
+            <div class="text-light bd-highlight" style="position: relative; margin-top: -480px; margin-left: 1370px; "> 
+                <a href=" {% url 'Logout' %}" style="text-decoration: none; font-size: 24px; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;" class="text-light ">Log out</a></div>
+         <div class="text-light bd-highlight" style="position: relative; margin-top: -480px; margin-left: 1270px; ">
+            <a href="{% url 'Login' %}" style="text-decoration: none; font-size: 24px; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;" class="text-light ">Login</a>
+
+         </div>
+         </div>
+         </div>
+
+
+<div class="container">
+         <div class="row " style="margin-top: 100px; ">
+            <div class="col-12 col-md-4 col-sm-6">
+                <a href="{% url 'Show_stalls' %}" class="text-decoration-none zoom-div" >
+                    <div class="card hover-zoom shadow" style="overflow: hidden;">
+                        <img class="img-fluid rounded" src="{% static 'css/images/pexels-chanwalrus-941869.jpg' %}" alt="Image" 
+                             style="width: 100%; height: 220px; transition: transform 0.3s ease;">
+                        <div class="card-body text-center">
+                            <h3 class="mb-3 mt-3 text-primary">Road Side <p style="text-decoration:underline;">Food Stalls</p></h3>
+                            <p class="text-secondary">Find the cheap and best stalls near you</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-12 col-md-4 col-sm-6">
+                <a href="{% url 'Juice_stalls' %}" class="text-decoration-none zoom-div w-100" >
+                    <div class="card hover-zoom shadow" style="overflow: hidden;">
+                        <img class="img-fluid rounded" src="{% static 'css/images/pexels-chanwalrus-941869.jpg' %}" alt="Image" 
+                             style="width: 100%; height: 220px; transition: transform 0.3s ease;">
+                        <div class="card-body text-center">
+                            <h3 class="mb-3 mt-3 text-primary">Road Side <p style="text-decoration:underline;">Juice Stalls</p></h3>
+                            <p class="text-secondary">Find the cheap and best stalls near you</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-12 col-md-4 col-sm-6">
+                <a href="{% url 'Icecream_stall' %}" class="text-decoration-none zoom-div" >
+                    <div class="card hover-zoom shadow" style="overflow: hidden;">
+                        <img class="img-fluid rounded" src="{% static 'css/images/pexels-chanwalrus-941869.jpg' %}" alt="Image" 
+                             style="width: 100%; height: 220px; transition: transform 0.3s ease;">
+                        <div class="card-body text-center">
+                            <h3 class="mb-3 mt-3 text-primary">Road Side <p style="text-decoration:underline;">Icecream Stalls</p></h3>
+                            <p class="text-secondary">Find the cheap and best stalls near you</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+
+        </div>
+
+        
+
+    
+
+    </div>
+
+
+
+
+
+
+
+
+        
+
+
+
+
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        setTimeout(() => {
+                            const messages = document.querySelectorAll('.msg .warning');
+                            messages.forEach(message => {
+                                message.style.transition = "opacity 0.5s ease";
+                                message.style.opacity = "0"; 
+                                setTimeout(() => message.remove(), 500); 
+                            });
+                        }, 3000); 
+                    });
+
+                    
+                </script>
+
+{% endblock %}

@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block title %} Register Page 
+{% endblock %}
+
+{% block base %}
+
+
+
+
+<div class="container bg-primary text-light d-flex justify-content-center align-items-center mt-4" style="width: 690px; height: 670px;" >
+
+    <div class="row  mt-4" >
+        <hr><hr>
+
+        <h2 class="text-center">-------------->REGISTER HERE<--------------</h2>
+            <hr><hr><hr>
+            <div class="msg text-center ">
+            {% if messages %}
+            {% for message in messages %}
+            <div class="warning {% if message.tags %}
+                            alert-{{ message.tags }}
+                            {% endif %}">
+
+                {{message}}
+            </div>
+                {% endfor %}
+            {% endif %}
+    </div>
+            <div class="col-12 col-lg-12 col-md-12 col-sm-12 col-md-6 ">
+        <form method="post" class="w-100 mt-0"  style="max-width: 400px; margin: auto;" autocomplete="off">  
+
+            {% csrf_token %}
+
+            <div class="form-group" >
+            <label for="username" class="">Username :</label>
+            <input type="text" name="username" class="form-control " id="" required> 
+        </div>
+        
+        <div class="form-group ">
+            <label for="email_id">Email ID :</label>
+            <input type="email" name="email_id" class="form-control " required>
+        </div>
+
+            <div class="form-group">
+            <label for="mob_num">Mob Num :</label>
+            <input type="text" name="mob_num" class="form-control" required >
+            </div>
+
+            <div class="form-group">
+            <label for="password">Password :</label>
+            <input type="password" name="password" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+            <label for="conf_pass">Confirm Password :</label>
+            <input type="password" name="conf_pass" id="" class="form-control" required>
+            </div>  
+
+            <div class="terms">
+                <label for="terms_check" class="text-dark"> I agree to the terms and conditions </label>
+                <input type="checkbox" name="terms_check" id="" class="">
+            </div>
+            <button  type="submit" class="btn btn-dark w-25 mt-4 "><a href="{% url 'Login' %}"></a>Sign Up</button>
+
+            <p>Already Registered ? <a href=" {% url 'Login' %}" class="link-info text-light">Login here</a></p>
+
+        </form>
+        
+    </div>
+</div>
+</div>
+
+
+{% endblock %}

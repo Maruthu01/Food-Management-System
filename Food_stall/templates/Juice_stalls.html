@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Stalls</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+<body>
+    
+
+
+    <div class="msg text-center mb-5 ">
+                  {% if messages %}
+                  {% for message in messages %}
+                  <div class="warning {% if message.tags %}
+                                  alert-{{ message.tags }}
+                                  {% endif %}">
+      
+                      {{message}}
+                  </div>
+                      {% endfor %}
+                  {% endif %}
+          </div>
+
+    <nav class="navbar navbar-light bg-body-tertiary">
+        <div class="container-fluid">
+          <a class="navbar-brand">Juice stalls </a>
+          <form class="d-flex input-group w-auto" id="searchForm">
+            {% csrf_token %}
+            <input
+              type="search"
+              class="form-control rounded"
+              placeholder="Search"
+              id="searchInput"
+             />
+            <span class="input-group-text border-0" id="search-addon">
+              <i class="fas fa-search"></i>
+            </span>
+          </form>
+        </div>
+      </nav>
+
+      
+
+      
+
+      <div class="container mt-5">
+        <h1 class="mb-4 text-center text-primary">Available Stalls</h1>
+        <div class="text-center mb-4">
+            <a href="{% url 'Add_juice' %}" class="btn btn-primary">Add juice Stalls</a>   
+            <a href="{% url 'Home' %}" class="btn btn-dark">Back</a>
+        </div>
+        
+
+       
+
+
+        <div class="row">
+            {% for Juice in Juices %}
+            <div class="col-md-4 mb-4">
+                <div class="card shadow">
+                    {% if Juice.Stall_images %}
+                    <img src="{{ Juice.Stall_images.url }}" alt="Stall Image" class="card-img-top" style="height: 200px; object-fit: cover;">
+                    {% else %}
+                    <img src="https://via.placeholder.com/300x200?text=No+Image" alt="No Image" class="card-img-top">
+                    {% endif %}
+    
+                    <div class="card-body">
+                        <h5 class="card-title">{{ Juice.Name }}</h5>
+                        <p class="card-text">
+                            <strong>Juice Type:</strong> {{ Juice.Juice_type }}<br>
+                            <strong>Contact:</strong> {{ Juice.Contact_num }}<br>
+                            <strong>Address:</strong> {{ Juice.Address }}<br>
+                            <strong>Timings:</strong> {{ Juice.opening_time }} - {{ Juice.closing_time }}
+                        </p>
+                    </div>
+
+                    
+                    
+                    {% if Juice.user == request.user %}
+                    <div class="card-footer text-end">
+                            <a href="{% url 'Update_juice' Juice.id %}" class="btn btn-warning btn-sm">Update</a>
+                            <form action="{% url 'delete_juice_stall' Juice.id %}" method="POST" class="d-inline">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            </form>
+                    </div> 
+                    {% endif %}
+
+                    {% if Juice.Location %}
+                     <a href="{% url 'Location' Juice.id %}" class="btn btn-primary btn-sm position-absolute top-50 start-50 translate-middle" >View Location</a>
+
+                        </a>
+                        {% else %}
+                        <span class="text-danger position-absolute top-50 start-50 translate-middle">
+                            Location Not Available
+                        </span>
+                        {% endif %}
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12">
+                <div class="alert alert-info text-center">
+                    No stalls available. Click "Add New Stall" to get started!
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="msg text-center ">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="warning {% if message.tags %}
+                        alert-{{ message.tags }}
+                        {% endif %}">
+
+            {{message}}
+        </div>
+            {% endfor %}
+        {% endif %}
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            setTimeout(() => {
+                const messages = document.querySelectorAll('.msg .warning');
+                messages.forEach(message => {
+                    message.style.transition = "opacity 0.5s ease";
+                    message.style.opacity = "0"; 
+                    setTimeout(() => message.remove(), 500); 
+                });
+            }, 3000); 
+        });
+
+
+        document.getElementById('searchInput').addEventListener('input', function() {
+        var searchTerm = this.value.toLowerCase();
+        var stallItems = document.querySelectorAll('.stall-item');
+        
+        stallItems.forEach(function(item) {
+            var itemText = item.textContent.toLowerCase();
+            if (itemText.includes(searchTerm)) {
+                item.style.display = ''; 
+            } else {
+                item.style.display = 'none'; 
+            }
+        });
+    });
+
+
+        
+    </script>
+
+
+</body>
+</html>
